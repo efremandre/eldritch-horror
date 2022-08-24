@@ -38,6 +38,7 @@ body {
 	justify-content: space-around;
 	align-items: center;
 	padding-top: 50px;
+	transition: 2s;
 }
 
 .ancient__card {
@@ -48,15 +49,15 @@ body {
 }
 
 .focus {
-	transform: scale(1.01);
-	-webkit-box-shadow: 0px 5px 10px 7px rgba(233, 217, 197, 0.2);
-	-moz-box-shadow: 0px 5px 10px 7px rgba(233, 217, 197, 0.2);
-	box-shadow: 0px 5px 10px 7px rgba(233, 217, 197, 0.2);
+	transform: scale(1.1);
+	-webkit-box-shadow: 0px 5px 10px 7px rgba(44, 50, 82, 0.2);
+	-moz-box-shadow: 0px 5px 10px 7px rgba(44, 50, 82, 0.2);
+	box-shadow: 0px 5px 10px 7px rgb(44, 50, 82, 0.9);
 }
 
 .ancient__card:hover {
 	cursor: pointer;
-	transform: scale(1.01);
+	transform: scale(1.1);
 }
 
 .ancient__img {

@@ -5,14 +5,14 @@ console.log('Hi guys');
 
 const ancientCard = document.querySelectorAll('.ancient__card');
 const btnСhoiceAncient = document.querySelector('.btnСhoiceAncient');
+const btnReolad = document.querySelector('.btnReolad');
 
-const cthulhuName = ancientsData[0].name;
+let firstStage;
+let secondStage;
+let thirdStage;
 
-const cthulhuStage1 = ancientsData[0].firstStage;
-const cthulhuStage2 = ancientsData[0].secondStage;
-const cthulhuStage3 = ancientsData[0].thirdStage;
+let ancientId = 'Not ID';
 
-let ancientId = 'Noname';
 
 // функция для стилей при выборе карточек
 function addRemoveFocus() {
@@ -25,6 +25,13 @@ function addRemoveFocus() {
 }
 
 addRemoveFocus();
+
+// получаем name древнего из массива ancientsData
+function getNameAncients() {
+
+}
+
+getNameAncients();
 
 // получаем id древнего, чтобы получить кол-во нужных карточек
 function getIdAncients() {
@@ -41,11 +48,35 @@ getIdAncients();
 
 // кнопка получения объекта с инфой о нужных карточках
 btnСhoiceAncient.addEventListener('click', choiceBtn);
+btnСhoiceAncient.addEventListener('click', removeCard);
+btnReolad.addEventListener('click', reloadBtn);
+
+function removeCard() {
+	ancientCard.forEach((elem) => {
+		if (elem.className === 'ancient__card') {
+			elem.remove();
+		}
+	})
+}
+
+function showDataCard() {
+	alert(`Этап 1: green ${firstStage.greenCards}, brown ${firstStage.brownCards}, blue ${firstStage.blueCards}\nЭтап 2: green ${secondStage.greenCards}, brown ${secondStage.brownCards}, blue ${secondStage.blueCards}\nЭтап 3: green ${thirdStage.greenCards}, brown ${thirdStage.brownCards}, blue ${thirdStage.blueCards}\n`);
+}
 
 function choiceBtn() {
-	if (ancientId === cthulhuName) {
-		console.log(cthulhuStage1)
-	} else {
-		console.log('no')
+	for (let i = 0; i < ancientsData.length; i++) {
+		if (ancientId === ancientsData[i].name) {
+			firstStage = ancientsData[i].firstStage;
+			secondStage = ancientsData[i].secondStage;
+			thirdStage = ancientsData[i].thirdStage;
+		}
 	}
+
+	setTimeout(showDataCard, 2000);
 }
+
+function reloadBtn() {
+	location.reload();
+	return false;
+}
+
