@@ -1,3 +1,3 @@
 'use stript';
 
-console.log('Hш guys');
+console.log('Hi guys');
