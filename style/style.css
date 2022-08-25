@@ -37,9 +37,12 @@ body {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	width: 100%;
 	padding-top: 50px;
-	transition: 2s;
+	transition: width 2s ease;
 }
+
+.center {}
 
 .ancient__card {
 	max-width: 300px;
@@ -53,6 +56,11 @@ body {
 	-webkit-box-shadow: 0px 5px 10px 7px rgba(44, 50, 82, 0.2);
 	-moz-box-shadow: 0px 5px 10px 7px rgba(44, 50, 82, 0.2);
 	box-shadow: 0px 5px 10px 7px rgb(44, 50, 82, 0.9);
+}
+
+.up {
+	transform: translateY(-1000%);
+	transition: 2s;
 }
 
 .ancient__card:hover {
