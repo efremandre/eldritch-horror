@@ -1,5 +1,5 @@
 console.log('add blue')
-const cardsData = [
+const cardsDataBlue = [
 	{
 		id: 'blue1',
 		cardFace: 'assets/MythicCards/blue/blue1.png',
@@ -74,4 +74,4 @@ const cardsData = [
 	},
 ]
 
-export default cardsData
+export default cardsDataBlue
