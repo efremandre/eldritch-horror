@@ -1,7 +1,7 @@
 'use stript';
 import ancientsData from "../data/ancients.js";
 import cardsDataGreen from "../data/mythicCards/green/greenCards.js";
-import cardsDataBrown from "../data/MythicCards/brown/index.js";
+import cardsDataBrown from "../data/mythicCards/brown/brownCards.js";
 import cardsDataBlue from "../data/MythicCards/blue/blueCards.js";
 
 console.log('Hi guys');
