@@ -12,10 +12,38 @@
 
 <body>
 	<div class="wrapper">
-		<header class="header"></header>
-		<main class="main"></main>
+		<header class="header">
+			<section class="header__logo">
+				<img class="header__img" src="./assets/Logo.webp" alt="Eldritch Horror Logo">
+			</section>
+		</header>
+		<main class="main">
+			<section class="main__ancient ancient">
+				<div class="ancient__card">
+					<img class="ancient__img" id="cthulhu" src="./assets/Ancients/cthulhu.png" alt="Cthulhu">
+				</div>
+				<div class="ancient__card">
+					<img class="ancient__img" id="shubniggurath" src="./assets/Ancients/shubniggurath.png" alt="ShubNiggurath">
+				</div>
+				<div class="ancient__card">
+					<img class="ancient__img" id="iogsothoth" src="./assets/Ancients/iogsothoth.png" alt="IogSothoth">
+				</div>
+				<div class="ancient__card">
+					<img class="ancient__img" id="azathoth" src="./assets/Ancients/azathoth.png" alt="Azathoth">
+				</div>
+			</section>
+			<section class="main__button button">
+				<div class="button__block ">
+					<button class="button__link btnСhoiceAncient disabled" disabled="true">Замешать</button>
+				</div>
+				<div class="button__block ">
+					<button class="button__link btnReolad">Заново</button>
+				</div>
+			</section>
+		</main>
 		<footer class="footer"></footer>
 	</div>
+
 	<script src="./script/index.js" type="module"></script>
 </body>
 
