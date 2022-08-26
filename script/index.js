@@ -29,7 +29,7 @@ const blueStage1 = document.querySelector('.counter__blue-stage1');
 const blueStage2 = document.querySelector('.counter__blue-stage2');
 const blueStage3 = document.querySelector('.counter__blue-stage3');
 
-const stackCard = [];
+const cardDeck = [];
 
 let firstStage;
 let secondStage;
@@ -173,7 +173,7 @@ function showDataCard() {
 showDataCard();
 
 // собираем массив из карточек
-function creatStackCard() {
+function creatCardDeck() {
 	//  1 этап
 	function creatStage1(green, brown, blue) {
 		const stage1 = [];
@@ -196,7 +196,7 @@ function creatStackCard() {
 
 		stage1.sort(() => Math.random() - 0.5);
 
-		return stackCard.push(stage1);
+		return cardDeck.push(stage1);
 	}
 
 	creatStage1(cardsDataGreen, cardsDataBrown, cardsDataBlue);
@@ -223,7 +223,7 @@ function creatStackCard() {
 
 		stage2.sort(() => Math.random() - 0.5);
 
-		return stackCard.push(stage2);
+		return cardDeck.push(stage2);
 	}
 
 	creatStage2(cardsDataGreen, cardsDataBrown, cardsDataBlue);
@@ -250,17 +250,19 @@ function creatStackCard() {
 
 		stage3.sort(() => Math.random() - 0.5);
 
-		return stackCard.push(stage3);
+		return cardDeck.push(stage3);
 	}
 
 	creatStage3(cardsDataGreen, cardsDataBrown, cardsDataBlue);
 
-	console.table(stackCard)
+	console.table(cardDeck[0])
+	console.table(cardDeck[1])
+	console.table(cardDeck[2])
 
-	return stackCard;
+	return cardDeck;
 }
 
-const mixStack = creatStackCard();
+const mixStack = creatCardDeck();
 
 localStorage.setItem('mixStack', mixStack);
 
@@ -269,3 +271,16 @@ if (btnOpenCard) {
 	btnOpenCard.addEventListener('click', openCard);
 }
 
+let i = 0;
+
+function openCard() {
+	if (cardDeck[i].length || i++) {
+		let elem = cardDeck[i].pop();
+		stackImg.src = elem.cardFace;
+		console.log(cardDeck.length)
+	}
+	// if (cardDeck[i].length === 0) {
+	// 	console.log('hey')
+	// 	cardDeck.splice(0, 1);
+	// }
+}
