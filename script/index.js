@@ -1,8 +1,8 @@
 'use stript';
-import ancientsData from "./data/ancients.js";
-import cardsDataGreen from "./data/MythicCards/green/index.js";
-import cardsDataBrown from "./data/MythicCards/brown/index.js";
-import cardsDataBlue from "./data/MythicCards/blue/index.js";
+import ancientsData from "/eldritch-horror/data/ancients.js";
+import cardsDataGreen from "/eldritch-horror/data/MythicCards/green/index.js";
+import cardsDataBrown from "/eldritch-horror/data/MythicCards/brown/index.js";
+import cardsDataBlue from "/eldritch-horror/data/MythicCards/blue/index.js";
 
 console.log('Hi guys');
 
