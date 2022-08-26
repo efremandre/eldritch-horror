@@ -91,7 +91,8 @@ function getIdAncients() {
 	ancientCard.forEach((elem) => {
 		elem.addEventListener('click', (ev) => {
 			ancientId = ev.target.id;
-			console.log(ancientId) //*********************** */
+			console.log(ancientId);//*********************** */
+			setLocalStorigesId();
 			setDataAnc();
 		})
 	})
@@ -225,12 +226,7 @@ function creatCardDeck() {
 
 	creatStage3(cardsDataGreen, cardsDataBrown, cardsDataBlue);
 
-	console.table(cardDeck[0])
-	console.table(cardDeck[1])
-	console.table(cardDeck[2])
-	console.log(cardDeck)
-
-	localStorage.setItem('deck', cardDeck);
+	localStorage.setItem('deck', JSON.stringify(cardDeck));
 	return cardDeck;
 }
 
@@ -254,7 +250,7 @@ function removeCard() {
 	btnBlock.classList.add('down');
 	ancientCard.forEach((elem) => {
 		elem.classList.add('up');
-		// makeTransition();
+		makeTransition();
 	})
 }
 
@@ -301,14 +297,21 @@ if (btnOpenCard) {
 
 let i = 0;
 
+// достаем из local storiges массив с картами
+let newDeckCard = [];
+
+if (localStorage.getItem('deck')) {
+	newDeckCard = JSON.parse(localStorage.getItem('deck'));
+}
+
 // берем карты из массива и показываем их на экран
 function openCard() {
-	if (cardDeck[i].length || i++) {
-		let elem = cardDeck[i].pop();
+	if (newDeckCard[i].length || i++) {
+		let elem = newDeckCard[i].pop();
 		stackImg.src = elem.cardFace;
-		console.log(cardDeck[i].length)
-		if (cardDeck[i].length === 0) {
-			cardDeck.splice(0, 1);
+		console.log(newDeckCard[i].length)
+		if (newDeckCard[i].length === 0) {
+			newDeckCard.splice(0, 1);
 		}
 	}
 
@@ -317,7 +320,7 @@ function openCard() {
 
 // по окончанию колоды показываем затеменную рубашку каты, делаем кнопку открывания неактивной и меняем текс в кнопке "назад", переадаем функцию в openCard()
 function changeDeckAndBtn() {
-	if (cardDeck.length === 0) {
+	if (newDeckCard.length === 0) {
 		stackImg.src = 'assets/mythicCardBackground.png';
 		stackImg.classList.add('antifocus');
 		btnOpenCard.setAttribute('disabled', 'true');
