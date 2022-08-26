@@ -30,6 +30,11 @@ const blueStage2 = document.querySelector('.counter__blue-stage2');
 const blueStage3 = document.querySelector('.counter__blue-stage3');
 
 const cardDeck = [];
+const dataNumberCard = [];
+
+let greenCardsNum = 0;
+let blueCardsNum = 0;
+let brownCardsNum = 0;
 
 let firstStage;
 let secondStage;
@@ -50,6 +55,13 @@ function getLocalStorigesId() {
 
 let ancientLocalStId = getLocalStorigesId();
 
+
+// отключаем кнопку выбрать до выбора древнего
+function chekButton() {
+	btnСhoiceAncient.removeAttribute('disabled');
+	btnСhoiceAncient.classList.remove('disabled');
+}
+
 // функция для стилей при выборе карточек
 function addRemoveFocus() {
 	ancientCard.forEach((elem) => {
@@ -67,12 +79,6 @@ function addRemoveFocus() {
 
 addRemoveFocus();
 
-// отключаем кнопку выбрать до выбора древнего
-function chekButton() {
-	btnСhoiceAncient.removeAttribute('disabled');
-	btnСhoiceAncient.classList.remove('disabled');
-}
-
 // кнопки получения объекта с инфой о нужных карточках, удаление ненужных карточек и перезагрузка страницы
 if (btnСhoiceAncient) {
 	btnСhoiceAncient.addEventListener('click', choiceBtn);
@@ -85,37 +91,153 @@ function getIdAncients() {
 	ancientCard.forEach((elem) => {
 		elem.addEventListener('click', (ev) => {
 			ancientId = ev.target.id;
-			setLocalStorigesId();
 			console.log(ancientId) //*********************** */
+			setDataAnc();
 		})
 	})
-	return ancientId;
 }
 
 getIdAncients();
 
+// узнаем нужное для древнег кол-во карт
+
+console.log(ancientId)
+
+function setDataAnc() {
+
+	for (let key in ancientsData) {
+		if (ancientId === ancientsData[key].name) {
+			if (dataNumberCard.length === 0) {
+				dataNumberCard.push(ancientsData[key].firstStage.greenCards);
+				dataNumberCard.push(ancientsData[key].firstStage.brownCards);
+				dataNumberCard.push(ancientsData[key].firstStage.blueCards);
+
+				dataNumberCard.push(ancientsData[key].secondStage.greenCards);
+				dataNumberCard.push(ancientsData[key].secondStage.brownCards);
+				dataNumberCard.push(ancientsData[key].secondStage.blueCards);
+
+				dataNumberCard.push(ancientsData[key].thirdStage.greenCards);
+				dataNumberCard.push(ancientsData[key].thirdStage.brownCards);
+				dataNumberCard.push(ancientsData[key].thirdStage.blueCards);
+
+			} else if (dataNumberCard.length !== 0) { // костыль добавил потому что пушится сверху, а не заменяется, если выбрать другую карту древнего
+				dataNumberCard.splice(0, 9);
+
+				dataNumberCard.push(ancientsData[key].firstStage.greenCards);
+				dataNumberCard.push(ancientsData[key].firstStage.brownCards);
+				dataNumberCard.push(ancientsData[key].firstStage.blueCards);
+
+				dataNumberCard.push(ancientsData[key].secondStage.greenCards);
+				dataNumberCard.push(ancientsData[key].secondStage.brownCards);
+				dataNumberCard.push(ancientsData[key].secondStage.blueCards);
+
+				dataNumberCard.push(ancientsData[key].thirdStage.greenCards);
+				dataNumberCard.push(ancientsData[key].thirdStage.brownCards);
+				dataNumberCard.push(ancientsData[key].thirdStage.blueCards);
+			}
+		}
+	}
+
+	console.log(dataNumberCard)
+	return dataNumberCard;
+}
+
+// собираем массив из карточек
+function creatCardDeck() {
+	//  1 этап
+	function creatStage1(green, brown, blue) {
+		const stage1 = [];
+
+		green.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[0]; i++) {
+			let res = green.pop();
+			stage1.push(res)
+		}
+		brown.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[1]; i++) {
+			let res = brown.pop();
+			stage1.push(res)
+		}
+		blue.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[2]; i++) {
+			let res = blue.pop();
+			stage1.push(res)
+		}
+
+		stage1.sort(() => Math.random() - 0.5);
+
+		return cardDeck.push(stage1);
+	}
+
+	creatStage1(cardsDataGreen, cardsDataBrown, cardsDataBlue);
+
+	//  2 этап
+	function creatStage2(green, brown, blue) {
+		const stage2 = [];
+
+		green.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[3]; i++) {
+			let res = green.pop();
+			stage2.push(res)
+		}
+		brown.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[4]; i++) {
+			let res = brown.pop();
+			stage2.push(res)
+		}
+		blue.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[5]; i++) {
+			let res = blue.pop();
+			stage2.push(res)
+		}
+
+		stage2.sort(() => Math.random() - 0.5);
+
+		return cardDeck.push(stage2);
+	}
+
+	creatStage2(cardsDataGreen, cardsDataBrown, cardsDataBlue);
+
+	//  3 этап
+	function creatStage3(green, brown, blue) {
+		const stage3 = [];
+
+		green.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[6]; i++) {
+			let res = green.pop();
+			stage3.push(res)
+		}
+		brown.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[7]; i++) {
+			let res = brown.pop();
+			stage3.push(res)
+		}
+		blue.sort(() => Math.random() - 0.5);
+		for (let i = 0; i < dataNumberCard[8]; i++) {
+			let res = blue.pop();
+			stage3.push(res)
+		}
+
+		stage3.sort(() => Math.random() - 0.5);
+
+		return cardDeck.push(stage3);
+	}
+
+	creatStage3(cardsDataGreen, cardsDataBrown, cardsDataBlue);
+
+	console.table(cardDeck[0])
+	console.table(cardDeck[1])
+	console.table(cardDeck[2])
+	console.log(cardDeck)
+
+	localStorage.setItem('deck', cardDeck);
+	return cardDeck;
+}
+
 // замешиваем колоду карт
 function choiceBtn() {
 
-
-	// for (let i = 0; i < ancientsData.length; i++) {
-	// 	if (ancientId === ancientsData[i].name) {
-	// 		firstStage = ancientsData[i].firstStage;
-	// 		localStorage.setItem('greenCards1', firstStage.greenCards);
-	// 		localStorage.setItem('brownCards1', firstStage.brownCards);
-	// 		localStorage.setItem('blueCards1', firstStage.blueCards);
-
-	// 		secondStage = ancientsData[i].secondStage;
-	// 		localStorage.setItem('greenCards2', secondStage.greenCards);
-	// 		localStorage.setItem('brownCards2', secondStage.brownCards);
-	// 		localStorage.setItem('blueCards2', secondStage.blueCards);
-
-	// 		thirdStage = ancientsData[i].thirdStage;
-	// 		localStorage.setItem('greenCards3', thirdStage.greenCards);
-	// 		localStorage.setItem('brownCards3', thirdStage.brownCards);
-	// 		localStorage.setItem('blueCards3', thirdStage.blueCards);
-	// 	}
-	// }
+	creatCardDeck();
 }
 
 // добавляем выбранную карту на следующей страничке
@@ -132,7 +254,7 @@ function removeCard() {
 	btnBlock.classList.add('down');
 	ancientCard.forEach((elem) => {
 		elem.classList.add('up');
-		makeTransition();
+		// makeTransition();
 	})
 }
 
@@ -172,100 +294,6 @@ function showDataCard() {
 
 showDataCard();
 
-// собираем массив из карточек
-function creatCardDeck() {
-	//  1 этап
-	function creatStage1(green, brown, blue) {
-		const stage1 = [];
-
-		green.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].firstStage.greenCards; i++) {
-			let res = green.pop();
-			stage1.push(res)
-		}
-		brown.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].firstStage.brownCards; i++) {
-			let res = brown.pop();
-			stage1.push(res)
-		}
-		blue.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].firstStage.blueCards; i++) {
-			let res = blue.pop();
-			stage1.push(res)
-		}
-
-		stage1.sort(() => Math.random() - 0.5);
-
-		return cardDeck.push(stage1);
-	}
-
-	creatStage1(cardsDataGreen, cardsDataBrown, cardsDataBlue);
-
-	//  2 этап
-	function creatStage2(green, brown, blue) {
-		const stage2 = [];
-
-		green.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].secondStage.greenCards; i++) {
-			let res = green.pop();
-			stage2.push(res)
-		}
-		brown.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].secondStage.brownCards; i++) {
-			let res = brown.pop();
-			stage2.push(res)
-		}
-		blue.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].secondStage.blueCards; i++) {
-			let res = blue.pop();
-			stage2.push(res)
-		}
-
-		stage2.sort(() => Math.random() - 0.5);
-
-		return cardDeck.push(stage2);
-	}
-
-	creatStage2(cardsDataGreen, cardsDataBrown, cardsDataBlue);
-
-	//  3 этап
-	function creatStage3(green, brown, blue) {
-		const stage3 = [];
-
-		green.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].thirdStage.greenCards; i++) {
-			let res = green.pop();
-			stage3.push(res)
-		}
-		brown.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].thirdStage.brownCards; i++) {
-			let res = brown.pop();
-			stage3.push(res)
-		}
-		blue.sort(() => Math.random() - 0.5);
-		for (let i = 0; i < ancientsData[0].thirdStage.blueCards; i++) {
-			let res = blue.pop();
-			stage3.push(res)
-		}
-
-		stage3.sort(() => Math.random() - 0.5);
-
-		return cardDeck.push(stage3);
-	}
-
-	creatStage3(cardsDataGreen, cardsDataBrown, cardsDataBlue);
-
-	console.table(cardDeck[0])
-	console.table(cardDeck[1])
-	console.table(cardDeck[2])
-
-	return cardDeck;
-}
-
-const mixStack = creatCardDeck();
-
-localStorage.setItem('mixStack', mixStack);
-
 // открываем карточки из стопки
 if (btnOpenCard) {
 	btnOpenCard.addEventListener('click', openCard);
@@ -273,8 +301,8 @@ if (btnOpenCard) {
 
 let i = 0;
 
+// берем карты из массива и показываем их на экран
 function openCard() {
-
 	if (cardDeck[i].length || i++) {
 		let elem = cardDeck[i].pop();
 		stackImg.src = elem.cardFace;
@@ -284,6 +312,11 @@ function openCard() {
 		}
 	}
 
+	changeDeckAndBtn();
+}
+
+// по окончанию колоды показываем затеменную рубашку каты, делаем кнопку открывания неактивной и меняем текс в кнопке "назад", переадаем функцию в openCard()
+function changeDeckAndBtn() {
 	if (cardDeck.length === 0) {
 		stackImg.src = 'assets/mythicCardBackground.png';
 		stackImg.classList.add('antifocus');

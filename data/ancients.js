@@ -6,18 +6,18 @@ const ancientsData = [
 		name: 'cthulhu',
 		firstStage: {
 			greenCards: 0,
-			blueCards: 2,
 			brownCards: 2,
+			blueCards: 2,
 		},
 		secondStage: {
 			greenCards: 1,
-			blueCards: 0,
 			brownCards: 3,
+			blueCards: 0,
 		},
 		thirdStage: {
 			greenCards: 3,
-			blueCards: 0,
 			brownCards: 4,
+			blueCards: 0,
 		},
 	},
 	{
