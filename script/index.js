@@ -274,13 +274,24 @@ if (btnOpenCard) {
 let i = 0;
 
 function openCard() {
+
 	if (cardDeck[i].length || i++) {
 		let elem = cardDeck[i].pop();
 		stackImg.src = elem.cardFace;
-		console.log(cardDeck.length)
+		console.log(cardDeck[i].length)
+		if (cardDeck[i].length === 0) {
+			cardDeck.splice(0, 1);
+		}
 	}
-	// if (cardDeck[i].length === 0) {
-	// 	console.log('hey')
-	// 	cardDeck.splice(0, 1);
-	// }
+
+	if (cardDeck.length === 0) {
+		stackImg.src = 'assets/mythicCardBackground.png';
+		stackImg.classList.add('antifocus');
+		btnOpenCard.setAttribute('disabled', 'true');
+		btnOpenCard.classList.add('disabled');
+		btnReolad.innerHTML = 'Замешать ещё'
+	}
 }
+
+
+
