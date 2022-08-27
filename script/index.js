@@ -32,7 +32,6 @@ const blueStage2 = document.querySelector('.counter__blue-stage2');
 const blueStage3 = document.querySelector('.counter__blue-stage3');
 
 const cardDeck = [];
-const dataNumberCard = [];
 
 let ancientId = 'Not ID';
 
@@ -85,57 +84,15 @@ function getIdAncients() {
 	ancientCard.forEach((elem) => {
 		elem.addEventListener('click', (ev) => {
 			ancientId = ev.target.id;
+			console.log(ancientId)
 			setLocalStorigesId();
-			setDataAnc();
 		})
 	})
+
+	return ancientId;
 }
 
 getIdAncients();
-
-// узнаем нужное для древнег кол-во карт
-
-console.log(ancientId)
-
-function setDataAnc() {
-
-	for (let key in ancientsData) {
-		if (ancientId === ancientsData[key].name) {
-			if (dataNumberCard.length === 0) {
-				dataNumberCard.push(ancientsData[key].firstStage.greenCards);
-				dataNumberCard.push(ancientsData[key].firstStage.brownCards);
-				dataNumberCard.push(ancientsData[key].firstStage.blueCards);
-
-				dataNumberCard.push(ancientsData[key].secondStage.greenCards);
-				dataNumberCard.push(ancientsData[key].secondStage.brownCards);
-				dataNumberCard.push(ancientsData[key].secondStage.blueCards);
-
-				dataNumberCard.push(ancientsData[key].thirdStage.greenCards);
-				dataNumberCard.push(ancientsData[key].thirdStage.brownCards);
-				dataNumberCard.push(ancientsData[key].thirdStage.blueCards);
-
-			} else if (dataNumberCard.length !== 0) { // костыль добавил потому что пушится сверху, а не заменяется, если выбрать другую карту древнего
-				dataNumberCard.splice(0, 9);
-
-				dataNumberCard.push(ancientsData[key].firstStage.greenCards);
-				dataNumberCard.push(ancientsData[key].firstStage.brownCards);
-				dataNumberCard.push(ancientsData[key].firstStage.blueCards);
-
-				dataNumberCard.push(ancientsData[key].secondStage.greenCards);
-				dataNumberCard.push(ancientsData[key].secondStage.brownCards);
-				dataNumberCard.push(ancientsData[key].secondStage.blueCards);
-
-				dataNumberCard.push(ancientsData[key].thirdStage.greenCards);
-				dataNumberCard.push(ancientsData[key].thirdStage.brownCards);
-				dataNumberCard.push(ancientsData[key].thirdStage.blueCards);
-			}
-		}
-	}
-
-	return dataNumberCard;
-}
-
-console.log(cardsDataGreen) // ************************************************************************
 
 // перемешиваение карт
 function randomaserDeck(deck) {
@@ -154,72 +111,51 @@ function creatSubDeck(length, deck, stage) {
 	}
 }
 
-function randomDeck() {
-	//  1 этап
-	function creatStage1(green, brown, blue) {
-		const stage1 = [];
+// замешиваем колоду
+function stageCardsById(id) {
+	const ancient = ancientsData.filter(({ name }) => name === id)[0];
+	const stages = {};
 
-		randomaserDeck(green); // перемешали
-		creatSubDeck(dataNumberCard[0], green, stage1); // добавили в колоду этапа
-
-		randomaserDeck(brown);
-		creatSubDeck(dataNumberCard[1], brown, stage1);
-
-		randomaserDeck(blue);
-		creatSubDeck(dataNumberCard[2], blue, stage1);
-
-		randomaserDeck(stage1); // снова перемешали всю колоду
-
-		return cardDeck.push(stage1); // запушили в колоду в стопку
+	for (const [name, value] of Object.entries(ancient)) {
+		if (name.endsWith("Stage")) stages[name] = value;
 	}
 
-	//  2 этап
-	function creatStage2(green, brown, blue) {
-		const stage2 = [];
+	for (const stage of Object.values(stages)) {
+		const temp = [];
+		for (const [type, count] of Object.entries(stage)) {
+			if (type.startsWith("green")) {
+				randomaserDeck(cardsDataGreen);
+				for (let i = 0; i < count; i++) {
+					temp.push(cardsDataGreen.pop());
+				}
+			}
+			if (type.startsWith("blue")) {
+				randomaserDeck(cardsDataBlue);
+				for (let i = 0; i < count; i++) {
+					temp.push(cardsDataBlue.pop());
+				}
+			}
+			if (type.startsWith("brown")) {
+				randomaserDeck(cardsDataBrown);
+				for (let i = 0; i < count; i++) {
+					temp.push(cardsDataBrown.pop());
+				}
+			}
+		}
 
-		randomaserDeck(green); // перемешали
-		creatSubDeck(dataNumberCard[3], green, stage2); // добавили в колоду этапа
-
-		randomaserDeck(brown);
-		creatSubDeck(dataNumberCard[4], brown, stage2);
-
-		randomaserDeck(blue);
-		creatSubDeck(dataNumberCard[5], blue, stage2);
-
-		randomaserDeck(stage2); // снова перемешали всю колоду
-
-		return cardDeck.push(stage2); // запушили в колоду в стопку
+		randomaserDeck(temp);
+		cardDeck.push(temp);
 	}
 
-	//  3 этап 
-	function creatStage3(green, brown, blue) {
-		const stage3 = [];
-
-		randomaserDeck(green); // перемешали
-		creatSubDeck(dataNumberCard[6], green, stage3); // добавили в колоду этапа
-
-		randomaserDeck(brown);
-		creatSubDeck(dataNumberCard[7], brown, stage3);
-
-		randomaserDeck(blue);
-		creatSubDeck(dataNumberCard[8], blue, stage3);
-
-		randomaserDeck(stage3); // снова перемешали всю колоду
-
-		return cardDeck.push(stage3); // запушили в колоду в стопку
-	}
-
-	creatStage1(cardsDataGreen, cardsDataBrown, cardsDataBlue); // функция создания колоды для уровня 
-	creatStage2(cardsDataGreen, cardsDataBrown, cardsDataBlue);
-	creatStage3(cardsDataGreen, cardsDataBrown, cardsDataBlue);
+	console.log(cardDeck)
+	return cardDeck;
 }
 
 // собираем массив из карточек, происходит по нажатию кнопки "ЗАМЕШАТЬ"
 function creatCardDeck() {
-	randomDeck(); // функция в которой создаются все три колоды и складываются в одну общую колоду
+	stageCardsById(ancientId); // функция в которой создаются все три колоды и складываются в одну общую колоду
 
 	localStorage.setItem('deck', JSON.stringify(cardDeck)); // сохранил в localStorage всю стопку для переноса на след. страницу
-	console.log(cardDeck)
 	return cardDeck;
 }
 
@@ -270,7 +206,10 @@ let newDeckCard = [];
 
 if (localStorage.getItem('deck')) {
 	newDeckCard = JSON.parse(localStorage.getItem('deck'));
+	console.log(newDeckCard)
 }
+
+console.log(newDeckCard)
 
 function countColorCardSt1() {
 	let greenCount = 0;
@@ -349,11 +288,11 @@ function showDataCard() {
 	}
 
 	if (greenStage2, brownStage2, blueStage2) {
-		countColorCardSt2();
+		// countColorCardSt2();
 	}
 
 	if (greenStage3, brownStage3, blueStage3) {
-		countColorCardSt3();
+		// countColorCardSt3();
 	}
 }
 
@@ -362,13 +301,11 @@ document.addEventListener("DOMContentLoaded", showDataCard); // отображе
 // берем карты из массива и показываем их на экран
 function openCard() {
 	if (newDeckCard[i].length) {
-		console.log(newDeckCard[i].length + ' кол-во карт в колоде для уровня')
 		let card = newDeckCard[i].pop();
 		stackImg.src = card.cardFace;
 	} else {
 		i++;
 	}
-	console.log(newDeckCard)
 	showDataCard();
 	changeDeckAndBtn();
 }
@@ -383,4 +320,3 @@ function changeDeckAndBtn() {
 		btnReolad.innerHTML = 'Замешать ещё'
 	}
 }
-
