@@ -1,6 +1,3 @@
-
-console.log('add ancient')
-
 const ancientsData = [
 	{
 		name: 'cthulhu',

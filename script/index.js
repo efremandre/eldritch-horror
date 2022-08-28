@@ -4,7 +4,7 @@ import cardsDataGreen from "../data/mythicCards/green/greenCards.js";
 import cardsDataBrown from "../data/mythicCards/brown/brownCards.js";
 import cardsDataBlue from "../data/mythicCards/blue/blueCards.js";
 
-console.log('Hi guys');
+console.log('\n\n (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ \n\n\n');
 
 const ancientCard = document.querySelectorAll('.ancient__card');
 const ancientImg = document.querySelector('.ancient__img');
@@ -12,9 +12,9 @@ const stackImg = document.querySelector('.setap__stack-img');
 
 const btnBlock = document.querySelector('.main__button');
 const btnСhoiceAncient = document.querySelector('.btnСhoiceAncient');
-const btnReolad = document.querySelector('.btnReolad');
+const btnPrev = document.querySelector('.btnPrev');
 
-const stageRow = document.querySelector('.counter__first-stage');
+const stageRow = document.querySelectorAll('.general-stage');
 
 const greenStage1 = document.querySelector('.counter__green-stage1');
 const greenStage2 = document.querySelector('.counter__green-stage2');
@@ -175,75 +175,107 @@ function removeCard() {
 function makeTransition() {
 	setTimeout(() => {
 		window.location.href = 'next.html';
-	}, 500);
+	}, 300);
 }
 
-// открываем карточки из стопки
-if (stackImg) {
-	stackImg.addEventListener('click', openCard);
-}
+// работа с колодой и показ данных о колодах
+function schowDeck() {
+	// достаем из local storiges массив с картами
+	let newDeckCard = [];
 
-// достаем из local storiges массив с картами
-let i = 0;
-let newDeckCard = [];
-
-if (localStorage.getItem('deck')) {
-	newDeckCard = JSON.parse(localStorage.getItem('deck'));
-}
-
-const countNumber = [];
-
-function countCard(value) {
-	newDeckCard.forEach(elem => {
-		const temp = elem.filter(({ color }) => color === value);
-		countNumber.push(temp.length);
-	})
-	return countNumber;
-}
-
-// отображение в счетчике
-function showCountNum() {
-	if (greenStage1, greenStage2, greenStage3) {
-		countCard('green');
-		greenStage3.innerHTML = countNumber.pop();
-		greenStage2.innerHTML = countNumber.pop();
-		greenStage1.innerHTML = countNumber.pop();
+	if (localStorage.getItem('deck')) {
+		newDeckCard = JSON.parse(localStorage.getItem('deck'));
 	}
 
-	if (brownStage1, brownStage2, brownStage3) {
-		countCard('brown')
-		brownStage3.innerHTML = countNumber.pop();
-		brownStage2.innerHTML = countNumber.pop();
-		brownStage1.innerHTML = countNumber.pop();
+	// для кроссчека
+	console.log(newDeckCard[0]);
+	console.log('------- deck of cards for stage 1 -------\n');
+	console.log(newDeckCard[1]);
+	console.log('------- deck of cards for stage 2 -------\n');
+	console.log(newDeckCard[2])
+	console.log('------- deck of cards for stage 3 -------\n');
+	//
+
+	// считаем карточки по цветам
+	const countNumber = [];
+
+	function countCard(value) {
+		newDeckCard.forEach(elem => {
+			const temp = elem.filter(({ color }) => color === value);
+			countNumber.push(temp.length);
+		})
+
+		return countNumber;
 	}
 
-	if (blueStage1, blueStage2, blueStage3) {
-		countCard('blue');
-		blueStage3.innerHTML = countNumber.pop();
-		blueStage2.innerHTML = countNumber.pop();
-		blueStage1.innerHTML = countNumber.pop();
+	// отображение в счетчике
+	function showCountNum() {
+		if (greenStage1, greenStage2, greenStage3) {
+			countCard('green');
+			greenStage3.innerHTML = countNumber.pop();
+			greenStage2.innerHTML = countNumber.pop();
+			greenStage1.innerHTML = countNumber.pop();
+		}
+
+		if (brownStage1, brownStage2, brownStage3) {
+			countCard('brown')
+			brownStage3.innerHTML = countNumber.pop();
+			brownStage2.innerHTML = countNumber.pop();
+			brownStage1.innerHTML = countNumber.pop();
+		}
+
+		if (blueStage1, blueStage2, blueStage3) {
+			countCard('blue');
+			blueStage3.innerHTML = countNumber.pop();
+			blueStage2.innerHTML = countNumber.pop();
+			blueStage1.innerHTML = countNumber.pop();
+		}
 	}
+
+	document.addEventListener("DOMContentLoaded", showCountNum); // отображение кол-ва карт в счетчике при загрузки страницы
+
+
+
+	// открываем карточки из стопки
+	if (stackImg) {
+		stackImg.addEventListener('click', openCard);
+	}
+
+	// берем карты из массива и показываем их на экран
+	let i = 0;
+
+	function openCard() {
+
+		if (newDeckCard[i].length || i++) {
+			let card = newDeckCard[i].pop();
+			stackImg.src = card.cardFace;
+
+			console.log(`open card: ${card.id}`);
+		}
+
+		showCountNum();
+		arrStringCount()
+		changeBtnPrev();
+	}
+
+	// по окончанию карт в этапе делаем строку "неактивной"
+	function arrStringCount() {
+		stageRow.forEach((elem, index) => {
+			if (newDeckCard[index].length === 0) {
+				elem.classList.add('disabled');
+			}
+		})
+	}
+
+	// по окончанию колоды показываем затеменную рубашку каты, делаем кнопку открывания неактивной и меняем текс в кнопке "назад", переадаем функцию в openCard()
+	function changeBtnPrev() {
+		if (newDeckCard[2].length === 0) {
+			stackImg.remove();
+			btnPrev.innerHTML = 'Замешать ещё';
+		}
+	}
+
 }
+schowDeck();
 
-document.addEventListener("DOMContentLoaded", showCountNum); // отображение кол-ва карт в счетчике при загрузки страницы
 
-// берем карты из массива и показываем их на экран
-function openCard() {
-	if (newDeckCard[i].length) {
-		let card = newDeckCard[i].pop();
-		stackImg.src = card.cardFace;
-	} else {
-		i++;
-	}
-	showCountNum()
-	changeDeckAndBtn();
-}
-
-// по окончанию колоды показываем затеменную рубашку каты, делаем кнопку открывания неактивной и меняем текс в кнопке "назад", переадаем функцию в openCard()
-function changeDeckAndBtn() {
-	if (!newDeckCard[0].length && !newDeckCard[1].length && !newDeckCard[2].length) {
-		stackImg.src = 'assets/mythicCardBackground.png';
-		stackImg.classList.add('antifocus');
-		btnReolad.innerHTML = 'Замешать ещё'
-	}
-}
