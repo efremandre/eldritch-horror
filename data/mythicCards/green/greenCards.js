@@ -1,4 +1,3 @@
-console.log('add green')
 const cardsDataGreen = [
 	{
 		id: 'green1',
