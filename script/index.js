@@ -17,7 +17,7 @@ const btnСhoiceAncient = document.querySelector('.btnСhoiceAncient');
 const btnReolad = document.querySelector('.btnReolad');
 const btnOpenCard = document.querySelector('.btnOpenCard');
 
-const stageText = document.querySelectorAll('.counter__text');
+const stageRow = document.querySelector('.counter__first-stage');
 
 const greenStage1 = document.querySelector('.counter__green-stage1');
 const greenStage2 = document.querySelector('.counter__green-stage2');
@@ -104,10 +104,9 @@ function randomaserDeck(deck) {
 }
 
 // добавление карт в новую колоду
-function creatSubDeck(length, deck, stage) {
-	for (let i = 0; i < length; i++) {
-		let res = deck.pop();
-		stage.push(res)
+function creatSubDeck(iter, arr1, arr2) {
+	for (let i = 0; i < iter; i++) {
+		arr2.push(arr1.pop());
 	}
 }
 
@@ -121,30 +120,24 @@ function stageCardsById(id) {
 	}
 
 	for (const stage of Object.values(stages)) {
-		const temp = [];
-		for (const [type, count] of Object.entries(stage)) {
-			if (type.startsWith("green")) {
-				randomaserDeck(cardsDataGreen);
-				for (let i = 0; i < count; i++) {
-					temp.push(cardsDataGreen.pop());
-				}
+		const newArr = [];
+		for (const [type, num] of Object.entries(stage)) {
+			if (type.startsWith('green')) {
+				randomaserDeck(cardsDataGreen); // перемешали колоду с зелеными картами
+				creatSubDeck(num, cardsDataGreen, newArr); // собрали нужное зеленных кол-во карт
 			}
-			if (type.startsWith("blue")) {
-				randomaserDeck(cardsDataBlue);
-				for (let i = 0; i < count; i++) {
-					temp.push(cardsDataBlue.pop());
-				}
-			}
-			if (type.startsWith("brown")) {
+			if (type.startsWith('brown')) {
 				randomaserDeck(cardsDataBrown);
-				for (let i = 0; i < count; i++) {
-					temp.push(cardsDataBrown.pop());
-				}
+				creatSubDeck(num, cardsDataBrown, newArr);
+			}
+			if (type.startsWith('blue')) {
+				randomaserDeck(cardsDataBlue);
+				creatSubDeck(num, cardsDataBlue, newArr);
 			}
 		}
 
-		randomaserDeck(temp);
-		cardDeck.push(temp);
+		randomaserDeck(newArr); // перемешали получившуюся колоду для этапа
+		cardDeck.push(newArr); // засунули колоду в массив
 	}
 
 	console.log(cardDeck)
@@ -197,7 +190,8 @@ function reloadBtn() {
 
 // открываем карточки из стопки
 if (btnOpenCard) {
-	btnOpenCard.addEventListener('click', openCard);
+	// btnOpenCard.addEventListener('click', openCard);
+	stackImg.addEventListener('click', openCard);
 }
 
 // достаем из local storiges массив с картами
@@ -206,97 +200,43 @@ let newDeckCard = [];
 
 if (localStorage.getItem('deck')) {
 	newDeckCard = JSON.parse(localStorage.getItem('deck'));
-	console.log(newDeckCard)
 }
 
-console.log(newDeckCard)
+const countNumber = [];
 
-function countColorCardSt1() {
-	let greenCount = 0;
-	let brownCount = 0;
-	let blueCount = 0;
-
-	newDeckCard[0].forEach(elem => {
-		if (elem.color === 'green') {
-			greenCount++;
-		}
-		greenStage1.innerHTML = greenCount;
-
-		if (elem.color === 'brown') {
-			brownCount++;
-		}
-
-		brownStage1.innerHTML = brownCount;
-
-		if (elem.color === 'blue') {
-			blueCount++;
-		}
-		blueStage1.innerHTML = blueCount;
+function countCard(value) {
+	newDeckCard.forEach(elem => {
+		const temp = elem.filter(({ color }) => color === value);
+		countNumber.push(temp.length);
 	})
-}
-
-function countColorCardSt2() {
-	let greenCount = 0;
-	let brownCount = 0;
-	let blueCount = 0;
-
-	newDeckCard[1].forEach(elem => {
-		if (elem.color === 'green') {
-			greenCount++;
-		}
-		greenStage2.innerHTML = greenCount;
-
-		if (elem.color === 'brown') {
-			brownCount++;
-		}
-		brownStage2.innerHTML = brownCount;
-
-		if (elem.color === 'blue') {
-			blueCount++;
-		}
-		blueStage2.innerHTML = blueCount;
-	})
-}
-
-function countColorCardSt3() {
-	let greenCount = 0;
-	let brownCount = 0;
-	let blueCount = 0;
-
-	newDeckCard[2].forEach(elem => {
-		if (elem.color === 'green') {
-			greenCount++;
-		}
-		greenStage3.innerHTML = greenCount;
-
-		if (elem.color === 'brown') {
-			brownCount++;
-		}
-		brownStage3.innerHTML = brownCount;
-
-		if (elem.color === 'blue') {
-			blueCount++;
-		}
-		blueStage3.innerHTML = blueCount;
-	})
+	return countNumber;
 }
 
 // отображение в счетчике
-function showDataCard() {
-	if (greenStage1, brownStage1, blueStage1) {
-		countColorCardSt1();
+function showCountNum() {
+	if (greenStage1, greenStage2, greenStage3) {
+		countCard('green');
+		greenStage3.innerHTML = countNumber.pop();
+		greenStage2.innerHTML = countNumber.pop();
+		greenStage1.innerHTML = countNumber.pop();
 	}
 
-	if (greenStage2, brownStage2, blueStage2) {
-		// countColorCardSt2();
+	if (brownStage1, brownStage2, brownStage3) {
+		countCard('brown')
+		brownStage3.innerHTML = countNumber.pop();
+		brownStage2.innerHTML = countNumber.pop();
+		brownStage1.innerHTML = countNumber.pop();
 	}
 
-	if (greenStage3, brownStage3, blueStage3) {
-		// countColorCardSt3();
+	if (blueStage1, blueStage2, blueStage3) {
+		countCard('blue');
+		blueStage3.innerHTML = countNumber.pop();
+		blueStage2.innerHTML = countNumber.pop();
+		blueStage1.innerHTML = countNumber.pop();
 	}
 }
 
-document.addEventListener("DOMContentLoaded", showDataCard); // отображение кол-ва карт в счетчике при загрузки страницы
+document.addEventListener("DOMContentLoaded", showCountNum); // отображение кол-ва карт в счетчике при загрузки страницы
 
 // берем карты из массива и показываем их на экран
 function openCard() {
@@ -306,7 +246,7 @@ function openCard() {
 	} else {
 		i++;
 	}
-	showDataCard();
+	showCountNum()
 	changeDeckAndBtn();
 }
 
