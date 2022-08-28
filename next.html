@@ -5,45 +5,63 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="icon" href="./assets/favicon.png">
+	<link rel="icon" href="./assets/favic.ico">
 	<link rel="stylesheet" href="./style/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 	<title>Eldritch Horror Helper</title>
 </head>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper wrapper-next">
 		<header class="header">
 			<section class="header__logo">
-				<img class="header__img" src="./assets/Logo.webp" alt="Eldritch Horror Logo">
+				<img class="header__img" src="./assets/logo.webp" alt="Eldritch Horror Logo">
 			</section>
 		</header>
 		<main class="main">
 			<section class="main__setap setap">
-				<div class="setap__ancient-card">
-					<img class="setap__ancient-img ancient__img">
-				</div>
-				<div class="setap__counter counter">
-					<div class="counter__first-stage general-stage">
-						<span class="counter__text">Этап I:</span>
-						<span class="counter__blocks counter__green-stage1 green">0</span>
-						<span class="counter__blocks counter__brown-stage1 brown">0</span>
-						<span class="counter__blocks counter__blue-stage1 blue">0</span>
+				<div class="setap__ancient-block">
+					<div class="setap__title">
+						<h2>Древний</h2>
 					</div>
-					<div class="counter__second-stage general-stage">
-						<span class="counter__text">Этап II:</span>
-						<span class="counter__blocks counter__green-stage2 green">0</span>
-						<span class="counter__blocks counter__brown-stage2 brown">0</span>
-						<span class="counter__blocks counter__blue-stage2 blue">0</span>
-					</div>
-					<div class="counter__third-stage general-stage">
-						<span class="counter__text">Этап III:</span>
-						<span class="counter__blocks counter__green-stage3 green">0</span>
-						<span class="counter__blocks counter__brown-stage3 brown">0</span>
-						<span class="counter__blocks counter__blue-stage3 blue">0</span>
+					<div class="setap__ancient-card">
+						<img class="setap__ancient-img ancient__img">
 					</div>
 				</div>
-				<div class="setap__stack">
-					<img class="setap__stack-img" src="assets/mythicCardBackground.png">
+				<div class="setap__counter-block">
+					<div class="setap__title">
+						<h2>Колличество карт</h2>
+					</div>
+					<div class="setap__counter counter">
+						<div class="counter__first-stage general-stage">
+							<span class="counter__text">Этап I:</span>
+							<span class="counter__blocks counter__green-stage1 green">0</span>
+							<span class="counter__blocks counter__brown-stage1 brown">0</span>
+							<span class="counter__blocks counter__blue-stage1 blue">0</span>
+						</div>
+						<div class="counter__second-stage general-stage">
+							<span class="counter__text">Этап II:</span>
+							<span class="counter__blocks counter__green-stage2 green">0</span>
+							<span class="counter__blocks counter__brown-stage2 brown">0</span>
+							<span class="counter__blocks counter__blue-stage2 blue">0</span>
+						</div>
+						<div class="counter__third-stage general-stage">
+							<span class="counter__text">Этап III:</span>
+							<span class="counter__blocks counter__green-stage3 green">0</span>
+							<span class="counter__blocks counter__brown-stage3 brown">0</span>
+							<span class="counter__blocks counter__blue-stage3 blue">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="setap__stack-block">
+					<div class="setap__title">
+						<h2 class="title-deck">Кликни чтобы открыть карту</h2>
+					</div>
+					<div class="setap__stack">
+						<img class="setap__stack-img" src="./assets/bg-card.png">
+					</div>
 				</div>
 			</section>
 			<section class="main__button button">

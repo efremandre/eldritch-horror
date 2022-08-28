@@ -13,6 +13,7 @@ const stackImg = document.querySelector('.setap__stack-img');
 const btnBlock = document.querySelector('.main__button');
 const btnСhoiceAncient = document.querySelector('.btnСhoiceAncient');
 const btnPrev = document.querySelector('.btnPrev');
+const titleDeck = document.querySelector('.title-deck');
 
 const stageRow = document.querySelectorAll('.general-stage');
 
@@ -69,18 +70,11 @@ function addRemoveFocus() {
 
 addRemoveFocus();
 
-// кнопки получения объекта с инфой о нужных карточках, удаление ненужных карточек и перезагрузка страницы
-if (btnСhoiceAncient) {
-	btnСhoiceAncient.addEventListener('click', choiceBtn);
-	btnСhoiceAncient.addEventListener('click', removeCard);
-}
-
 // получаем id древнего, чтобы получить кол-во нужных карточек
 function getIdAncients() {
 	ancientCard.forEach((elem) => {
 		elem.addEventListener('click', (ev) => {
 			ancientId = ev.target.id;
-			console.log(ancientId)
 			setLocalStorigesId();
 		})
 	})
@@ -136,22 +130,23 @@ function stageCardsById(id) {
 		cardDeck.push(newArr); // засунули колоду в массив
 	}
 
-	console.log(cardDeck)
 	return cardDeck;
 }
 
-// собираем массив из карточек, происходит по нажатию кнопки "ЗАМЕШАТЬ"
-function creatCardDeck() {
+// кнопки получения объекта с инфой о нужных карточках, удаление ненужных карточек и перезагрузка страницы
+if (btnСhoiceAncient) {
+	btnСhoiceAncient.addEventListener('click', choiceBtn);
+	btnСhoiceAncient.addEventListener('click', removeCard);
+}
+
+// собираем массив из карточек и передаем на след страницу, происходит по нажатию кнопки "ЗАМЕШАТЬ"
+function choiceBtn() {
 	stageCardsById(ancientId); // функция в которой создаются все три колоды и складываются в одну общую колоду
 
 	localStorage.setItem('deck', JSON.stringify(cardDeck)); // сохранил в localStorage всю стопку для переноса на след. страницу
 	return cardDeck;
 }
 
-// замешиваем колоду карт
-function choiceBtn() {
-	creatCardDeck();
-}
 
 // добавляем выбранную карту на следующей страничке
 function addInCardNextPage() {
@@ -241,11 +236,20 @@ function schowDeck() {
 		stackImg.addEventListener('click', openCard);
 	}
 
+	function setDellayBtnOPenCard() {
+		stackImg.removeEventListener('click', openCard);
+
+		setTimeout(() => {
+			stackImg.addEventListener('click', openCard)
+		}, 500)
+	}
+
+
+
 	// берем карты из массива и показываем их на экран
 	let i = 0;
 
 	function openCard() {
-
 		if (newDeckCard[i].length || i++) {
 			let card = newDeckCard[i].pop();
 			stackImg.src = card.cardFace;
@@ -254,9 +258,12 @@ function schowDeck() {
 		}
 
 		showCountNum();
-		arrStringCount()
+		arrStringCount();
 		changeBtnPrev();
+		setDellayBtnOPenCard();
 	}
+
+
 
 	// по окончанию карт в этапе делаем строку "неактивной"
 	function arrStringCount() {
@@ -272,6 +279,7 @@ function schowDeck() {
 		if (newDeckCard[2].length === 0) {
 			stackImg.remove();
 			btnPrev.innerHTML = 'Замешать ещё';
+			titleDeck.innerHTML = 'Карты закончились';
 		}
 	}
 
