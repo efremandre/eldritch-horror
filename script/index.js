@@ -7,15 +7,12 @@ import cardsDataBlue from "../data/mythicCards/blue/blueCards.js";
 console.log('Hi guys');
 
 const ancientCard = document.querySelectorAll('.ancient__card');
-const ancient = document.querySelector('.ancient');
 const ancientImg = document.querySelector('.ancient__img');
-const stack = document.querySelector('.setap__stack');
 const stackImg = document.querySelector('.setap__stack-img');
 
 const btnBlock = document.querySelector('.main__button');
 const btnСhoiceAncient = document.querySelector('.btnСhoiceAncient');
 const btnReolad = document.querySelector('.btnReolad');
-const btnOpenCard = document.querySelector('.btnOpenCard');
 
 const stageRow = document.querySelector('.counter__first-stage');
 
@@ -76,7 +73,6 @@ addRemoveFocus();
 if (btnСhoiceAncient) {
 	btnСhoiceAncient.addEventListener('click', choiceBtn);
 	btnСhoiceAncient.addEventListener('click', removeCard);
-	btnReolad.addEventListener('click', reloadBtn);
 }
 
 // получаем id древнего, чтобы получить кол-во нужных карточек
@@ -182,15 +178,8 @@ function makeTransition() {
 	}, 500);
 }
 
-// кнопка перезагрузки странички
-function reloadBtn() {
-	location.reload();
-	return false;
-}
-
 // открываем карточки из стопки
-if (btnOpenCard) {
-	// btnOpenCard.addEventListener('click', openCard);
+if (stackImg) {
 	stackImg.addEventListener('click', openCard);
 }
 
@@ -255,8 +244,6 @@ function changeDeckAndBtn() {
 	if (!newDeckCard[0].length && !newDeckCard[1].length && !newDeckCard[2].length) {
 		stackImg.src = 'assets/mythicCardBackground.png';
 		stackImg.classList.add('antifocus');
-		btnOpenCard.setAttribute('disabled', 'true');
-		btnOpenCard.classList.add('disabled');
 		btnReolad.innerHTML = 'Замешать ещё'
 	}
 }
