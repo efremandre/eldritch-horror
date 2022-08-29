@@ -38,7 +38,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding: 0 10px;
-	min-height: 100%;
+	min-height: 100vh;
 	background: url('/eldritch-horror/assets/home.webp') center center / cover no-repeat;
 	animation: opacity 2s ease;
 	overflow: hidden;
@@ -68,8 +68,12 @@ body {
 	text-align: center;
 }
 
+.main-title {
+	margin: 15px 0 10px 0;
+}
+
 .header__logo {
-	max-width: 250px;
+	max-width: 200px;
 	margin: 0 auto;
 	padding: 0 5px;
 	animation: pendulum 3s ease-in-out infinite;
@@ -83,7 +87,7 @@ body {
 
 .main {
 	flex: 1 1 auto;
-	padding: 10px 0;
+	padding: 5px 0;
 }
 
 .ancient {
@@ -116,15 +120,15 @@ body {
 }
 
 .main__button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 50px;
+	margin-top: 10px;
+	animation: down 1.5s;
 }
 
 .button__block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding: 5px;
-	animation: down 1.5s;
 }
 
 .button__link {
@@ -133,6 +137,7 @@ body {
 	align-items: center;
 	width: 200px;
 	height: 50px;
+	margin: 0 10px;
 	color: #000;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -150,6 +155,30 @@ body {
 	opacity: .7;
 }
 
+.button__level {
+	margin-bottom: 10px;
+}
+
+.level {
+	padding-bottom: 5px;
+}
+
+.level__title_lev {
+	margin: 20px 0 10px 0;
+	font-size: 20px;
+}
+
+.level__button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.button__link_small {
+	width: 150px;
+	font-size: 14px;
+}
+
 /*NEXT PAGE************************/
 .setap {
 	display: flex;
@@ -159,9 +188,12 @@ body {
 	animation: up 1.5s;
 }
 
-.setap__title {
-	margin-bottom: 25px;
+.setap__title-block {
 	text-align: center;
+}
+
+.setap__title {
+	margin: 10px 0 25px 0;
 }
 
 .setap__stack,
@@ -226,6 +258,8 @@ body {
 .blue {
 	background: #4A5AA4;
 }
+
+
 
 @keyframes up {
 	0% {
