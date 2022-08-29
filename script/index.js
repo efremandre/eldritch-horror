@@ -151,7 +151,7 @@ function choiceBtn() {
 // добавляем выбранную карту на следующей страничке
 function addInCardNextPage() {
 	if (ancientImg.src === '') {
-		ancientImg.src = `./assets/Ancients/${ancientLocalStId}.png`;
+		ancientImg.src = `./assets/Ancients/${ancientLocalStId}.webp`;
 	}
 }
 
